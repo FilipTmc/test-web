@@ -1,0 +1,107 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const kontakti = [
+  { oznaka: "TEL", vrijednost: "097 631 1213", href: "tel:+385976311213" },
+  { oznaka: "MAIL", vrijednost: "orionet6@gmail.com", href: "mailto:orionet6@gmail.com" },
+  { oznaka: "PORTAL", vrijednost: "bpinfo.hr", href: "https://bpinfo.hr" },
+  { oznaka: "PORTAL", vrijednost: "orionet.com.hr", href: "https://orionet.com.hr" },
+];
+
+const polje = "w-full border border-white/15 bg-surface px-4 py-3.5 text-paper placeholder:text-white/30 focus:border-signal focus:outline-none";
+const oznakaPolja = "mb-2 block font-mono text-[11px] uppercase tracking-[0.22em] text-mist";
+---
+
+<Layout title="Kontakt — LeonMedia">
+
+  <section class="border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-6 pb-20 pt-40">
+      <p class="rise rise-1 font-mono text-[11px] uppercase tracking-[0.3em] text-signal">Kontakt</p>
+
+      <h1 class="rise rise-2 mt-6 max-w-3xl font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.035em] sm:text-7xl">
+        Recite što<br /><span class="text-signal">i kada snimamo.</span>
+      </h1>
+
+      <p class="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-mist">
+        Odgovor stiže isti dan, obično unutar par sati. Za hitne termine nazovite — brže je nego mailom.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-24">
+    <div class="grid gap-16 lg:grid-cols-[1fr_1.2fr]">
+
+      <!-- PODACI -->
+      <div>
+        <h2 class="font-display text-2xl font-bold tracking-[-0.02em]">Izravno</h2>
+
+        <ul class="mt-8 divide-y divide-white/10 border-y border-white/10">
+          {kontakti.map((k) => (
+            <li>
+              <a href={k.href} class="group flex items-center gap-6 py-5">
+                <span class="w-20 shrink-0 font-mono text-[11px] uppercase tracking-[0.22em] text-signal">{k.oznaka}</span>
+                <span class="text-paper transition-colors group-hover:text-signal">{k.vrijednost}</span>
+                <span class="ml-auto text-signal opacity-0 transition-opacity group-hover:opacity-100">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-10 border border-white/10 bg-surface p-6">
+          <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-mist">Sjedište</p>
+          <p class="mt-3 leading-relaxed text-paper">
+            LeonMedia j.d.o.o.<br />Slavonski Brod
+          </p>
+          <p class="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
+            45.1603° N &nbsp; 18.0156° E
+          </p>
+        </div>
+      </div>
+
+      <!-- OBRAZAC -->
+      <div>
+        <h2 class="font-display text-2xl font-bold tracking-[-0.02em]">Pošaljite upit</h2>
+
+        <form action="https://formspree.io/f/VAS_KOD" method="POST" class="mt-8 space-y-6">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div>
+              <label for="ime" class={oznakaPolja}>Ime i prezime</label>
+              <input id="ime" name="ime" type="text" required class={polje} placeholder="Ivan Ivić" />
+            </div>
+            <div>
+              <label for="telefon" class={oznakaPolja}>Telefon</label>
+              <input id="telefon" name="telefon" type="tel" class={polje} placeholder="09x xxx xxxx" />
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class={oznakaPolja}>E-mail</label>
+            <input id="email" name="email" type="email" required class={polje} placeholder="ivan@tvrtka.hr" />
+          </div>
+
+          <div>
+            <label for="usluga" class={oznakaPolja}>Što vam treba</label>
+            <select id="usluga" name="usluga" class={polje}>
+              <option>Snimanje iz zraka</option>
+              <option>Fotografija</option>
+              <option>Video i montaža</option>
+              <option>Kombinirano</option>
+              <option>Nešto drugo</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="poruka" class={oznakaPolja}>Detalji</label>
+            <textarea id="poruka" name="poruka" rows="5" required class={polje} placeholder="Lokacija, datum i što treba snimiti."></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-signal px-9 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5 sm:w-auto">
+            Pošalji upit
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</Layout>

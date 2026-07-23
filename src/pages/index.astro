@@ -1,17 +1,134 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import hero from "../assets/hero.jpg";
 
+const usluge = [
+  {
+    format: "MP4 · 4K",
+    naslov: "Snimanje iz zraka",
+    opis: "Objekti, gradilišta, poljoprivredne površine i događanja snimljena dronom. Ovlašteni operater.",
+  },
+  {
+    format: "JPG · RAW",
+    naslov: "Fotografija",
+    opis: "Događanja, portreti, proizvodi i interijeri. Obrađene fotografije spremne za objavu.",
+  },
+  {
+    format: "MP4 · 1080p",
+    naslov: "Video i montaža",
+    opis: "Reportaže, promotivni video i kratke forme za Facebook, Instagram i TikTok.",
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="LeonMedia — foto, video i dron produkcija">
+
+  <!-- HERO -->
+  <section class="relative isolate flex min-h-[94vh] items-end overflow-hidden">
+    <Image src={hero} alt="Snimka iz zraka" loading="eager" class="absolute inset-0 -z-20 h-full w-full object-cover" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/25"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-transparent to-ink/70"></div>
+
+    <!-- tražilo -->
+    <div class="pointer-events-none absolute inset-5 sm:inset-8">
+      <span class="absolute left-0 top-0 h-8 w-8 border-l-2 border-t-2 border-white/40"></span>
+      <span class="absolute right-0 top-0 h-8 w-8 border-r-2 border-t-2 border-white/40"></span>
+      <span class="absolute bottom-0 left-0 h-8 w-8 border-b-2 border-l-2 border-white/40"></span>
+      <span class="absolute bottom-0 right-0 h-8 w-8 border-b-2 border-r-2 border-white/40"></span>
+    </div>
+
+    <!-- telemetrija -->
+    <div class="absolute inset-x-0 top-24 z-10">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70 sm:text-[11px]">
+        <span class="flex items-center gap-2">
+          <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span> Snima
+        </span>
+        <span class="hidden sm:block">45.1603° N &nbsp; 18.0156° E</span>
+        <span>ALT 120 m</span>
+      </div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-6xl px-6 pb-24 pt-40">
+      <p class="rise rise-1 font-mono text-[11px] uppercase tracking-[0.3em] text-signal">
+        Foto — Video — Dron
+      </p>
+
+      <h1 class="rise rise-2 mt-6 max-w-3xl font-display text-5xl font-extrabold leading-[0.92] tracking-[-0.035em] sm:text-7xl lg:text-8xl">
+        Slavonija iz zraka,<br />iz blizine,<br /><span class="text-signal">iz prve ruke.</span>
+      </h1>
+
+      <p class="rise rise-3 mt-8 max-w-md text-lg leading-relaxed text-mist">
+        Snimanje za tvrtke, općine i događanja u Brodsko-posavskoj županiji. Od izlaska na teren do gotovog materijala u vašim rukama.
+      </p>
+
+      <div class="rise rise-4 mt-10 flex flex-wrap gap-3">
+        <a href="/kontakt" class="bg-signal px-7 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5">
+          Zatraži ponudu
+        </a>
+        <a href="/o-nama" class="border border-white/25 px-7 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-paper transition-colors hover:border-white/60">
+          Pogledaj radove
+        </a>
+      </div>
+    </div>
+
+    <div class="absolute inset-x-0 bottom-8 hidden sm:block">
+      <div class="mx-auto max-w-6xl px-6">
+        <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">
+          Slavonski Brod · Oriovac · Sibinj · Nova Gradiška · Bebrina
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- USLUGE -->
+  <section class="mx-auto max-w-6xl px-6 py-28">
+    <div class="flex items-baseline justify-between border-b border-white/10 pb-6">
+      <h2 class="font-display text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl">Što dobivate</h2>
+      <span class="font-mono text-[11px] uppercase tracking-[0.22em] text-mist">Isporuka</span>
+    </div>
+
+    <div class="mt-12 grid gap-px bg-white/10 sm:grid-cols-3">
+      {usluge.map((u) => (
+        <article class="group bg-ink p-8 transition-colors hover:bg-surface">
+          <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-signal">{u.format}</p>
+          <h3 class="mt-6 font-display text-2xl font-bold tracking-[-0.02em]">{u.naslov}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-mist">{u.opis}</p>
+          <span class="mt-8 inline-block text-signal opacity-0 transition-opacity group-hover:opacity-100">→</span>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- DISTRIBUCIJA -->
+  <section class="border-y border-white/10 bg-surface">
+    <div class="mx-auto grid max-w-6xl gap-10 px-6 py-24 lg:grid-cols-2 lg:items-center">
+      <div>
+        <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-signal">Prednost</p>
+        <h2 class="mt-5 font-display text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-5xl">
+          Snimljeno danas,<br />objavljeno danas.
+        </h2>
+      </div>
+      <div>
+        <p class="text-lg leading-relaxed text-mist">
+          Uz produkciju vodim i dva lokalna portala. Vaš događaj ne završi na disku — ide pred publiku koja živi u vašoj općini.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <span class="border border-white/15 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper">bpinfo.hr</span>
+          <span class="border border-white/15 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper">orionet.com.hr</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-6 py-28 text-center">
+    <h2 class="mx-auto max-w-2xl font-display text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-6xl">
+      Imate događaj, objekt ili priču?
+    </h2>
+    <a href="/kontakt" class="mt-10 inline-block bg-signal px-9 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5">
+      Zatraži ponudu
+    </a>
+  </section>
+
+</Layout>
