@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { usluge } from "../data/usluge";
 
 const { title = "LeonMedia" } = Astro.props;
 const putanja = Astro.url.pathname;
@@ -10,15 +11,13 @@ const linkovi = [
   { naziv: "Kontakt", href: "/kontakt" },
 ];
 
+const osnovna = "font-mono text-[11px] uppercase tracking-[0.2em] transition-colors ";
+
 function klasaLinka(href: string) {
-  return "font-mono text-[11px] uppercase tracking-[0.22em] transition-colors " +
-    (putanja === href ? "text-paper" : "text-mist hover:text-paper");
+  return osnovna + (putanja === href ? "text-paper" : "text-mist hover:text-paper");
 }
 
-function klasaMobilnog(href: string) {
-  return "block font-display text-4xl font-extrabold tracking-[-0.03em] transition-colors " +
-    (putanja === href ? "text-signal" : "text-paper");
-}
+const uslugeAktivne = putanja.startsWith("/usluge");
 ---
 
 <html lang="hr">
@@ -33,7 +32,7 @@ function klasaMobilnog(href: string) {
 
   <body class="min-h-screen bg-ink font-sans text-paper antialiased flex flex-col">
 
-    <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/60 backdrop-blur-xl">
+    <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/70 backdrop-blur-xl">
       <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a href="/" class="relative z-50 flex items-center gap-2.5">
           <span class="h-2.5 w-2.5 rotate-45 bg-signal"></span>
@@ -41,47 +40,59 @@ function klasaMobilnog(href: string) {
         </a>
 
         <!-- desktop -->
-        <div class="hidden items-center gap-7 sm:flex">
-          <ul class="flex gap-7">
-            {linkovi.map((link) => (
-              <li><a href={link.href} class={klasaLinka(link.href)}>{link.naziv}</a></li>
-            ))}
-          </ul>
+        <div class="hidden items-center gap-8 lg:flex">
+          <a href="/" class={klasaLinka("/")}>Naslovnica</a>
+
+          <div class="group relative">
+            <a href="/usluge" class={osnovna + (uslugeAktivne ? "text-paper" : "text-mist hover:text-paper")}>
+              Usluge <span class="text-signal">+</span>
+            </a>
+            <div class="invisible absolute left-1/2 top-full w-72 -translate-x-1/2 pt-5 opacity-0 transition-opacity duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div class="border border-white/10 bg-surface py-2 shadow-2xl shadow-black/60">
+                {usluge.map((u) => (
+                  <a href={`/usluge/${u.slug}`} class="block px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-mist transition-colors hover:bg-white/5 hover:text-paper">
+                    {u.naziv}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <a href="/o-nama" class={klasaLinka("/o-nama")}>O nama</a>
+          <a href="/kontakt" class={klasaLinka("/kontakt")}>Kontakt</a>
+
           <a href="/kontakt" class="border border-signal/60 bg-signal/10 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-paper transition-colors hover:bg-signal">
-            Javi se
+            Zatraži ponudu
           </a>
         </div>
 
         <!-- mobitel -->
-        <button
-          id="meni-gumb"
-          type="button"
-          class="burger relative z-50 sm:hidden"
-          aria-label="Izbornik"
-          aria-expanded="false"
-          aria-controls="meni-panel"
-        >
+        <button id="meni-gumb" type="button" class="burger relative z-50 lg:hidden" aria-label="Izbornik" aria-expanded="false" aria-controls="meni-panel">
           <span></span><span></span>
         </button>
       </nav>
     </header>
 
-    <!-- mobilni panel -->
-    <div id="meni-panel" class="fixed inset-x-0 bottom-0 top-16 z-40 hidden bg-ink sm:hidden">
-      <div class="flex h-full flex-col justify-between px-6 pb-10 pt-12">
-        <ul class="space-y-7">
-          {linkovi.map((link) => (
-            <li><a href={link.href} class={klasaMobilnog(link.href)}>{link.naziv}</a></li>
+    <div id="meni-panel" class="fixed inset-x-0 bottom-0 top-16 z-40 hidden overflow-y-auto bg-ink lg:hidden">
+      <div class="px-6 pb-16 pt-10">
+        <a href="/" class="block font-display text-3xl font-extrabold tracking-[-0.03em]">Naslovnica</a>
+
+        <p class="mt-9 font-mono text-[11px] uppercase tracking-[0.25em] text-signal">Usluge</p>
+        <ul class="mt-4 space-y-3.5 border-l border-white/10 pl-5">
+          {usluge.map((u) => (
+            <li>
+              <a href={`/usluge/${u.slug}`} class="block text-lg text-mist">{u.naziv}</a>
+            </li>
           ))}
         </ul>
 
-        <div>
-          <a href="/kontakt" class="block bg-signal px-7 py-4 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-white">
-            Zatraži ponudu
-          </a>
-          <p class="mt-8 font-mono text-[11px] uppercase tracking-[0.2em] text-mist">097 631 1213</p>
-          <p class="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-mist">orionet6@gmail.com</p>
-        </div>
+        <a href="/o-nama" class="mt-9 block font-display text-3xl font-extrabold tracking-[-0.03em]">O nama</a>
+        <a href="/kontakt" class="mt-5 block font-display text-3xl font-extrabold tracking-[-0.03em]">Kontakt</a>
+
+        <a href="/kontakt" class="mt-12 block bg-signal px-7 py-4 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-white">
+          Zatraži ponudu
+        </a>
+        <p class="mt-8 font-mono text-[11px] uppercase tracking-[0.2em] text-mist">097 631 1213</p>
       </div>
     </div>
 
@@ -90,19 +101,35 @@ function klasaMobilnog(href: string) {
     </main>
 
     <footer class="border-t border-white/10 bg-ink">
-      <div class="mx-auto max-w-6xl px-6 py-12">
-        <div class="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+      <div class="mx-auto max-w-6xl px-6 py-16">
+        <div class="grid gap-10 sm:grid-cols-[1.2fr_1fr_1fr]">
           <div>
-            <p class="font-display text-3xl font-extrabold tracking-[-0.02em]">LeonMedia</p>
-            <p class="mt-2 max-w-xs text-sm text-mist">Foto, video i dron produkcija — Slavonski Brod.</p>
+            <p class="font-display text-2xl font-extrabold tracking-[-0.02em]">LeonMedia</p>
+            <p class="mt-3 max-w-xs text-sm leading-relaxed text-mist">
+              Foto i video produkcija, mediji i dizajn za Brodsko-posavsku županiju.
+            </p>
           </div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-mist">
-            <p>097 631 1213</p>
-            <p class="mt-1.5">orionet6@gmail.com</p>
-            <p class="mt-1.5 text-white/30">45.1603° N &nbsp; 18.0156° E</p>
+
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-white/40">Usluge</p>
+            <ul class="mt-4 space-y-2.5">
+              {usluge.map((u) => (
+                <li><a href={`/usluge/${u.slug}`} class="text-sm text-mist transition-colors hover:text-paper">{u.naziv}</a></li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-white/40">Kontakt</p>
+            <ul class="mt-4 space-y-2.5 text-sm text-mist">
+              <li><a href="tel:+385976311213" class="transition-colors hover:text-paper">097 631 1213</a></li>
+              <li><a href="mailto:orionet6@gmail.com" class="transition-colors hover:text-paper">orionet6@gmail.com</a></li>
+              <li class="pt-2">Slavonski Brod</li>
+            </ul>
           </div>
         </div>
-        <p class="mt-10 border-t border-white/10 pt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+
+        <p class="mt-14 border-t border-white/10 pt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
           © {new Date().getFullYear()} LeonMedia j.d.o.o.
         </p>
       </div>
@@ -123,50 +150,25 @@ function klasaMobilnog(href: string) {
           postavi(gumb.getAttribute("aria-expanded") !== "true");
         });
 
-        panel.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => postavi(false));
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") postavi(false);
-        });
-
-        window.addEventListener("resize", () => {
-          if (window.innerWidth >= 640) postavi(false);
-        });
+        panel.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => postavi(false)));
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") postavi(false); });
+        window.addEventListener("resize", () => { if (window.innerWidth >= 1024) postavi(false); });
       }
     </script>
 
     <style>
-      .burger {
-        width: 2.5rem;
-        height: 2.5rem;
-      }
+      .burger { width: 2.5rem; height: 2.5rem; }
       .burger span {
-        position: absolute;
-        left: 50%;
-        display: block;
-        height: 1.5px;
-        width: 1.375rem;
-        background: #f2f4f8;
+        position: absolute; left: 50%; display: block;
+        height: 1.5px; width: 1.375rem; background: #f2f4f8;
         transform: translateX(-50%);
-        transition: transform 0.3s ease, top 0.3s ease;
+        transition: transform .3s ease, top .3s ease;
       }
       .burger span:nth-child(1) { top: calc(50% - 4px); }
       .burger span:nth-child(2) { top: calc(50% + 4px); }
-
-      .burger[aria-expanded="true"] span:nth-child(1) {
-        top: 50%;
-        transform: translateX(-50%) rotate(45deg);
-      }
-      .burger[aria-expanded="true"] span:nth-child(2) {
-        top: 50%;
-        transform: translateX(-50%) rotate(-45deg);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .burger span { transition: none; }
-      }
+      .burger[aria-expanded="true"] span:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }
+      .burger[aria-expanded="true"] span:nth-child(2) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
+      @media (prefers-reduced-motion: reduce) { .burger span { transition: none; } }
     </style>
 
   </body>

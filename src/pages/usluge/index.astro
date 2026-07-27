@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { usluge } from "../../data/usluge";
+---
+
+<Layout title="Usluge — LeonMedia">
+
+  <section class="border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-6 pb-20 pt-40">
+      <p class="rise rise-1 font-mono text-[11px] uppercase tracking-[0.3em] text-signal">Usluge</p>
+      <h1 class="rise rise-2 mt-6 max-w-3xl font-display text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-6xl">
+        Šest područja, jedan sugovornik.
+      </h1>
+      <p class="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-mist">
+        Nema prebacivanja između fotografa, dizajnera i agencije. Sve dogovarate na jednom mjestu, a materijal se snima jednom i koristi svugdje.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-24">
+    <div class="grid gap-px bg-white/10 sm:grid-cols-2">
+      {usluge.map((u) => (
+        <a href={`/usluge/${u.slug}`} class="group flex flex-col bg-ink transition-colors hover:bg-surface">
+          <div class="relative aspect-[16/9] overflow-hidden">
+            <Image src={u.slika} alt={u.alt} class="h-full w-full object-cover opacity-55 transition duration-500 group-hover:scale-[1.04] group-hover:opacity-80" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink to-transparent"></div>
+          </div>
+          <div class="flex flex-1 flex-col p-8">
+            <h2 class="font-display text-2xl font-bold tracking-[-0.02em]">{u.naziv}</h2>
+            <p class="mt-3 flex-1 leading-relaxed text-mist">{u.kratko}</p>
+            <span class="mt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-signal">Detaljnije →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+</Layout>

@@ -1,0 +1,86 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { usluge } from "../../data/usluge";
+
+export function getStaticPaths() {
+  return usluge.map((usluga) => ({
+    params: { slug: usluga.slug },
+    props: { usluga },
+  }));
+}
+
+const { usluga } = Astro.props;
+const ostale = usluge.filter((u) => u.slug !== usluga.slug);
+---
+
+<Layout title={`${usluga.naslov} — LeonMedia`}>
+
+  <section class="relative isolate flex min-h-[62vh] items-end overflow-hidden">
+    <Image src={usluga.slika} alt={usluga.alt} loading="eager" class="absolute inset-0 -z-20 h-full w-full object-cover" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/35"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-transparent to-ink/65"></div>
+
+    <div class="relative mx-auto w-full max-w-6xl px-6 pb-20 pt-40">
+      <p class="rise rise-1 font-mono text-[11px] uppercase tracking-[0.3em] text-signal">Usluga</p>
+      <h1 class="rise rise-2 mt-6 max-w-3xl font-display text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-6xl">
+        {usluga.naslov}
+      </h1>
+      <p class="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-mist">
+        {usluga.uvod}
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-24">
+    <div class="grid gap-16 lg:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold tracking-[-0.02em]">Što uključuje</h2>
+        <ul class="mt-8 divide-y divide-white/10 border-y border-white/10">
+          {usluga.ukljucuje.map((stavka) => (
+            <li class="flex gap-4 py-4">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-signal"></span>
+              <span class="leading-relaxed text-mist">{stavka}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl font-bold tracking-[-0.02em]">Što dobivate</h2>
+        <ul class="mt-8 divide-y divide-white/10 border-y border-white/10">
+          {usluga.isporuka.map((stavka) => (
+            <li class="flex gap-4 py-4">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-white/30"></span>
+              <span class="leading-relaxed text-mist">{stavka}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-10 border border-white/10 bg-surface p-8">
+          <p class="font-display text-xl font-bold tracking-[-0.02em]">Cijena po dogovoru</p>
+          <p class="mt-3 text-sm leading-relaxed text-mist">
+            Ovisi o opsegu, trajanju i roku. Javite okvir onoga što vam treba i ponuda stiže isti dan.
+          </p>
+          <a href="/kontakt" class="mt-6 inline-block bg-signal px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5">
+            Zatraži ponudu
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-white/10 bg-surface">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-white/40">Ostale usluge</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        {ostale.map((u) => (
+          <a href={`/usluge/${u.slug}`} class="border border-white/15 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-mist transition-colors hover:border-signal hover:text-paper">
+            {u.naziv}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>

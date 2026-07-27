@@ -1,122 +1,73 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const oprema = [
-  { oznaka: "DRON", stavka: "Ovlašteni operater bespilotnih letjelica" },
-  { oznaka: "FOTO", stavka: "Reportažna i produktna fotografija" },
-  { oznaka: "VIDEO", stavka: "Snimanje i montaža do 4K" },
-  { oznaka: "DIZAJN", stavka: "Grafička priprema i priprema za tisak" },
-  { oznaka: "TEKST", stavka: "Novinarska obrada i objava" },
-];
+import { Image } from "astro:assets";
+import portret from "../assets/heroONama.jpg";
 
 const koraci = [
-  {
-    broj: "01",
-    naslov: "Dogovor",
-    opis: "Kratki poziv ili poruka. Utvrdimo što snimamo, kada i u kojem formatu vam materijal treba.",
-  },
-  {
-    broj: "02",
-    naslov: "Teren",
-    opis: "Izlazak na lokaciju s kompletnom opremom. Dron, foto i video u jednom dolasku.",
-  },
-  {
-    broj: "03",
-    naslov: "Isporuka",
-    opis: "Obrađen materijal u dogovorenom roku, spreman za objavu bez dodatnih intervencija.",
-  },
+  { naslov: "Dogovor", opis: "Poziv ili poruka u kojoj utvrdimo što se snima, kada i u kojem obliku vam materijal treba." },
+  { naslov: "Teren", opis: "Izlazak s kompletnom opremom. Dron, fotoaparat i video u istom dolasku, bez naplate dodatnog izlaska." },
+  { naslov: "Isporuka", opis: "Obrađen materijal u dogovorenom roku, spreman za objavu ili tisak bez dodatnih intervencija." },
 ];
-
-const podrucje = ["Slavonski Brod", "Oriovac", "Sibinj", "Slavonski Kobaš", "Nova Gradiška", "Bebrina"];
 ---
 
 <Layout title="O nama — LeonMedia">
 
   <section class="border-b border-white/10">
-    <div class="mx-auto max-w-6xl px-6 pb-24 pt-40">
-      <p class="rise rise-1 font-mono text-[11px] uppercase tracking-[0.3em] text-signal">O nama</p>
-
-      <h1 class="rise rise-2 mt-6 max-w-3xl font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.035em] sm:text-7xl">
-        Jedan čovjek,<br /><span class="text-signal">cijela produkcija.</span>
-      </h1>
-
-      <p class="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-mist">
-        LeonMedia je mala produkcijska kuća iz Slavonskog Broda. Nema podugovaranja i nema čekanja na tuđi raspored — snimanje, montaža i objava rade se pod istim krovom.
-      </p>
+    <div class="mx-auto grid max-w-6xl gap-14 px-6 pb-20 pt-40 lg:grid-cols-2 lg:items-center">
+      <div>
+        <p class="rise rise-1 font-mono text-[11px] uppercase tracking-[0.3em] text-signal">O nama</p>
+        <h1 class="rise rise-2 mt-6 font-display text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-6xl">
+          Mala kuća, cijela produkcija.
+        </h1>
+        <p class="rise rise-3 mt-8 max-w-lg text-lg leading-relaxed text-mist">
+          LeonMedia je produkcijska kuća iz Slavonskog Broda. Snimanje, montaža, dizajn i objava rade se u kući, pa nema čekanja na tuđi raspored ni prebacivanja odgovornosti između podizvođača.
+        </p>
+      </div>
+      <Image src={portret} alt="Rad na terenu" class="rise rise-4 aspect-[4/3] w-full object-cover" />
     </div>
   </section>
 
-  <!-- ŠTO RADIM -->
   <section class="mx-auto max-w-6xl px-6 py-24">
-    <div class="grid gap-16 lg:grid-cols-[1fr_1.3fr]">
+    <div class="grid gap-14 lg:grid-cols-[1fr_1.2fr]">
       <div>
-        <h2 class="font-display text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl">Što pokrivam</h2>
+        <h2 class="font-display text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl">Kako radim</h2>
         <p class="mt-5 max-w-sm leading-relaxed text-mist">
-          Klijenti obično zovu zbog jedne stvari, a dobiju sve ostalo bez dodatnog traženja.
+          Tri koraka, bez sastanaka koji ne vode nikamo.
         </p>
       </div>
 
       <ul class="divide-y divide-white/10 border-y border-white/10">
-        {oprema.map((o) => (
-          <li class="flex flex-col gap-1.5 py-5 sm:flex-row sm:items-center sm:gap-8">
-            <span class="w-20 shrink-0 font-mono text-[11px] uppercase tracking-[0.22em] text-signal">{o.oznaka}</span>
-            <span class="text-paper">{o.stavka}</span>
+        {koraci.map((k) => (
+          <li class="py-7">
+            <h3 class="font-display text-xl font-bold tracking-[-0.02em]">{k.naslov}</h3>
+            <p class="mt-2.5 leading-relaxed text-mist">{k.opis}</p>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <!-- KAKO IDE -->
   <section class="border-y border-white/10 bg-surface">
-    <div class="mx-auto max-w-6xl px-6 py-24">
-      <h2 class="font-display text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl">Kako to ide</h2>
-
-      <div class="mt-14 grid gap-px bg-white/10 sm:grid-cols-3">
-        {koraci.map((k) => (
-          <article class="bg-surface p-8">
-            <p class="font-mono text-4xl font-medium text-white/15">{k.broj}</p>
-            <h3 class="mt-6 font-display text-2xl font-bold tracking-[-0.02em]">{k.naslov}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-mist">{k.opis}</p>
-          </article>
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="font-display text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl">Područje rada</h2>
+      <p class="mt-5 max-w-xl leading-relaxed text-mist">
+        Redovito radim po cijeloj Brodsko-posavskoj županiji. Za lokacije izvan županije javite se svejedno — dogovor ovisi o terminu.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-2.5">
+        {["Slavonski Brod", "Oriovac", "Sibinj", "Slavonski Kobaš", "Nova Gradiška", "Bebrina", "Garčin", "Donji Andrijevci"].map((mjesto) => (
+          <span class="border border-white/15 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mist">{mjesto}</span>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- PODRUČJE -->
-  <section class="mx-auto max-w-6xl px-6 py-24">
-    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-      <div>
-        <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-signal">Područje rada</p>
-        <h2 class="mt-5 font-display text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-5xl">
-          Brodsko-posavska<br />županija i okolica.
-        </h2>
-        <p class="mt-6 max-w-md leading-relaxed text-mist">
-          Za lokacije izvan županije javite se svejedno — dogovor je moguć ovisno o terminu.
-        </p>
-      </div>
-
-      <div class="flex flex-wrap gap-2.5">
-        {podrucje.map((mjesto) => (
-          <span class="border border-white/15 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper">
-            {mjesto}
-          </span>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="border-t border-white/10">
-    <div class="mx-auto max-w-6xl px-6 py-24 text-center">
-      <h2 class="mx-auto max-w-2xl font-display text-4xl font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-5xl">
-        Krenimo od termina.
-      </h2>
-      <a href="/kontakt" class="mt-10 inline-block bg-signal px-9 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5">
-        Zatraži ponudu
-      </a>
-    </div>
+  <section class="mx-auto max-w-6xl px-6 py-24 text-center">
+    <h2 class="mx-auto max-w-2xl font-display text-3xl font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-5xl">
+      Krenimo od termina.
+    </h2>
+    <a href="/kontakt" class="mt-10 inline-block bg-signal px-9 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5">
+      Zatraži ponudu
+    </a>
   </section>
 
 </Layout>
